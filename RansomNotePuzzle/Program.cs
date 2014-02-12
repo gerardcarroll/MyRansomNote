@@ -52,9 +52,54 @@ namespace RansomNotePuzzle
             CanBuildMessage(Note.ToString(), Newspaper.ToString());
             sw.Stop();
             ReportResult("Dana Diac");
+
+            sw.Restart();
+            CheckGerard(Note.ToString(), Newspaper.ToString());
+            sw.Stop();
+            ReportResult("Gerard Carroll");
             Console.ReadLine();
         }
 
+        #region Gerard Carroll
+        private static bool CheckGerard(string n, string pl)
+        {
+            char[] noteLetters = n.ToCharArray();
+            List<Char> paperLetters = new List<Char>(pl);
+            var length = 0;
+            bool flag = true;
+
+            //Start Searching
+            foreach (Char c in noteLetters)
+            {
+                //Skip Spaces
+                if (c == ' ')
+                { length++; flag = false; }
+
+                if (flag)
+                {
+                    foreach (Char p in paperLetters)
+                    {
+                        if (p == noteLetters[length])
+                        {
+                            length++;
+                            paperLetters.Remove(p);
+
+                            if (length == noteLetters.Length)
+                            {
+                                return true;
+                            }//end if
+
+                            break; //Have to add break as letter found and collection is modified
+
+                        }//end if
+                    }
+                }
+                flag = true;
+            }//End Searching
+
+            return false;
+        }
+        #endregion
         #region Dana Diac
         public static int[] CountSort(String note)
         {
